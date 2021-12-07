@@ -6,20 +6,20 @@
 #    By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 14:57:32 by ajearuth          #+#    #+#              #
-#    Updated: 2021/12/06 17:31:23 by ajearuth         ###   ########.fr        #
+#    Updated: 2021/12/07 14:45:09 by ajearuth         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 BIN = pipex
 
-SRCS = pipex.c  
+SRCS = main.c main_utils.c pipex.c 
 SRCSD = srcs/
 bonus =
 
 OBJSD = objs/
 
 LIBFT_PATH = libft/
-LIBFT_SRCS = 
+LIBFT_SRCS = ft_strlen.c ft_putstr_fd.c 
 LIBFT_OBJS = $(addprefix $(OBJSD), $(LIBFT_SRCS:.c=.o))
 OBJS = $(addprefix $(OBJSD), $(SRCS:.c=.o))
 OBJSBONUS = $(bonus:.c=.o)
