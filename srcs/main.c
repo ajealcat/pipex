@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:38:28 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/07 16:06:57 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:58:39 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ int	main(int ac, char **av)
 	int file2;
 
 	file1 = open(av[1], O_RDONLY);
-	file2 = open(av[4], 0_RDWR | O_TRUNC);
+	file2 = open(av[4], 0_RDWR | O_TRUNC | O_CREAT);
 	if (file1 == -1 || file2 == -1)
 	       return(error());
+
 
 }

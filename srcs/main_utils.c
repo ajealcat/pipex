@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 14:41:57 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/07 14:43:52 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/08 16:27:33 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,9 @@
 void	error(void);
 {
 	ft_putstr_fd("Error\n", 2);
+}
+
+void	error_manager_mandatory(int ac, char **av)
+{
+	
 }
