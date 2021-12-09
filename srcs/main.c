@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:38:28 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/09 10:23:44 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/09 17:14:45 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ int	main(int ac, char **av, const char **envp)
 	file2 = open(av[4],O_CREAT | O_RDWR | O_TRUNC);
 	if (file1 == -1 || file2 == -1)
 	       return(error());
-
-
+	pipex(file1, file2, envp);
+	return(0);
 }
