@@ -6,13 +6,13 @@
 #    By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 14:57:32 by ajearuth          #+#    #+#              #
-#    Updated: 2021/12/07 14:45:09 by ajearuth         ###   ########.fr        #
+#    Updated: 2021/12/10 14:41:48 by ajearuth         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 BIN = pipex
 
-SRCS = main.c main_utils.c pipex.c 
+SRCS = main.c pipex.c 
 SRCSD = srcs/
 bonus =
 
