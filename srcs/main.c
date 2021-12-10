@@ -6,22 +6,13 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:38:28 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/09 17:14:45 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/10 13:48:23 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 // Pour la partie bonus faire une fonction count_arg qui va compter le nomnre de cmd de av[1] a av[len - 1]
-
-int	read_cmd(int cmd)
-{
-	
-}
-
-int	execve()
-{
-}
 
 int	main(int ac, char **av, const char **envp)
 {
@@ -34,4 +25,12 @@ int	main(int ac, char **av, const char **envp)
 	       return(error());
 	pipex(file1, file2, envp);
 	return(0);
+}
+
+void	**parse_cmd(char *av)
+{
+	char **cmd;
+	if (cmd == NULL)
+		return(NULL);
+	cmd = ft_split(av, ' ');
 }
