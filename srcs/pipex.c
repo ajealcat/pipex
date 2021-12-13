@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 16:42:05 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/13 15:37:06 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/13 16:52:08 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ int	pipex(int file1, int file2, char **av, char **envp)
 	return (0);
 }
 
+int	find_path(char **envp, cmd)
+{
+	
+}	
+
 int	make_first_cmd(int fd1, char *cmd1, int *pipefd, char **envp)
 {
 	char **cmd_av;
@@ -58,9 +63,14 @@ int	make_first_cmd(int fd1, char *cmd1, int *pipefd, char **envp)
 	while(my_path[i])
 	{
 		pathname = ft_strjoin(my_path[i], cmd1);
-		execve(pathname, cmd_av, envp);
-		perror("Execv error");
-		free(pathname);
+		if (access(pathname, F_OK) == 0)
+		{
+			execve(pathname, cmd_av, envp);
+			perror("Execv error");
+			free(pathname);
+		}
+		else 
+			perror("Path");
 		++i;
 	}
 	close(fd1);
