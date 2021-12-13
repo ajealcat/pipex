@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 16:42:05 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/13 15:02:10 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:37:06 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ int	make_first_cmd(int fd1, char *cmd1, int *pipefd, char **envp)
 	{
 		pathname = ft_strjoin(my_path[i], cmd1);
 		execve(pathname, cmd_av, envp);
+		perror("Execv error");
 		free(pathname);
+		++i;
 	}
 	close(fd1);
 	close(pipefd[0]);
@@ -85,7 +87,9 @@ int	make_second_cmd(int fd2, char *cmd2, int *pipefd, char **envp)
 	{
 		pathname = ft_strjoin(my_path[i], cmd2);
 		execve(pathname, cmd_av, envp);
+		perror("Execve error");
 		free(pathname);
+		++i;
 	}
 	close(fd2);
 	close(pipefd[0]);

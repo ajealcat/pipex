@@ -6,14 +6,14 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:38:28 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/13 14:19:02 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:09:58 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include <stdio.h>
 
-int	main(int ac, char **av, const char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	int file1;
 	int file2;
