@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 16:42:05 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/14 12:19:40 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:40:11 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	**find_path(char **envp)
 {
 	char *find_path;
 	char **my_path;
+	int	i;
 
 	while(*envp)
 	{
@@ -58,9 +59,15 @@ char	**find_path(char **envp)
 		++envp;
 	}
 	my_path = ft_split(find_path, ':');
+	i = 0;
+	while (my_path[i])
+	{
+		my_path[i] = ft_strjoin(my_path[i], "/");
+		++i;
+	}
 	free(find_path);
 	return (my_path);
-}	
+}
 
 int	make_first_cmd(int fd1, char *cmd1, int *pipefd, char **envp)
 {
@@ -78,6 +85,7 @@ int	make_first_cmd(int fd1, char *cmd1, int *pipefd, char **envp)
 	while(my_path[i])
 	{
 		pathname = ft_strjoin(my_path[i], cmd1);
+		printf("%s\n", pathname);
 		if (access(pathname, F_OK) == 0)
 		{
 			if (execve(pathname, cmd_av, envp) == -1)
@@ -88,8 +96,7 @@ int	make_first_cmd(int fd1, char *cmd1, int *pipefd, char **envp)
 		free(pathname);
 		++i;
 	}
-	free(cmd_av);	
-	free(my_path);
+	free_all_split(cmd_av, my_path);
 	close(fd1);
 	close(pipefd[0]);
 	return(0);
@@ -120,8 +127,7 @@ int	make_second_cmd(int fd2, char *cmd2, int *pipefd, char **envp)
 		free(pathname);
 		++i;
 	}
-	free(cmd_av);
-	free(my_path);
+	free_all_split(cmd_av, my_path);
 	close(fd2);
 	close(pipefd[1]);
 	return(0);

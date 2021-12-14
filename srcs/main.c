@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:38:28 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/14 11:59:13 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:33:00 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,3 +32,22 @@ int	main(int ac, char **av, char **envp)
 	return(0);
 }
 
+void	free_all_split(char **cmd, char **mypath)
+{
+	int i;
+
+	i = 0;
+	while(cmd[i])
+	{
+		free(cmd[i]);
+		++i;
+	}
+	free(cmd);
+	i = 0;
+	while (mypath[i])
+	{
+		free(mypath[i]);
+		++i;
+	}
+	free(mypath);
+}
