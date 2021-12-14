@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 16:42:05 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/14 17:40:11 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/14 18:13:28 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ int	pipex(int file1, int file2, char **av, char **envp)
 	return (0);
 }
 
-char	**find_path(char **envp)
+char	**find_path(char **envp, char *cmd)
 {
 	char *find_path;
 	char **my_path;
+	char **cmd_av;
 	int	i;
 
 	while(*envp)
@@ -59,43 +60,34 @@ char	**find_path(char **envp)
 		++envp;
 	}
 	my_path = ft_split(find_path, ':');
+	cmd_av = ft_split(cmd, ' ');
 	i = 0;
 	while (my_path[i])
 	{
 		my_path[i] = ft_strjoin(my_path[i], "/");
+		my_path[i] = ft_strjoin(my_path[i], cmd_av[0]);
+		if (access(my_path[i], F_OK == 0))
+		{
+			free(find_path);
+			return(my_path);
+		}
 		++i;
 	}
 	free(find_path);
-	return (my_path);
+	return (0);
 }
 
 int	make_first_cmd(int fd1, char *cmd1, int *pipefd, char **envp)
 {
-	char **cmd_av;
 	char **my_path;
 	char *pathname;
-	int i;
 	
 	dup2(fd1, 0);
 	dup2(pipefd[1], 1);
-	cmd_av = ft_split(cmd1, ' ');
-	my_path = find_path(envp);
-	i = 0;
-
-	while(my_path[i])
-	{
-		pathname = ft_strjoin(my_path[i], cmd1);
-		printf("%s\n", pathname);
-		if (access(pathname, F_OK) == 0)
-		{
-			if (execve(pathname, cmd_av, envp) == -1)
-				perror("Execve");
-			free(pathname);
-			break ;
-		}
-		free(pathname);
-		++i;
-	}
+	my_path = find_path(envpi, cmd1);
+	if (execve(pathname, cmd_av, envp) == -1)
+		perror("Execve");
+	free(pathname);
 	free_all_split(cmd_av, my_path);
 	close(fd1);
 	close(pipefd[0]);
@@ -104,29 +96,15 @@ int	make_first_cmd(int fd1, char *cmd1, int *pipefd, char **envp)
 
 int	make_second_cmd(int fd2, char *cmd2, int *pipefd, char **envp)
 {
-	char **cmd_av;
 	char **my_path;
 	char *pathname;
-	int i;
 	
 	dup2(fd2, 1);
 	dup2(pipefd[0], 0);
-	cmd_av = ft_split(cmd2, ' ');
-	my_path = find_path(envp);
-	i = 0;
-	while(my_path[i])
-	{
-		pathname = ft_strjoin(my_path[i], cmd2);
-		if(access(pathname, F_OK) == 0)
-		{
-			if(execve(pathname, cmd_av, envp) == -1)
-				perror("Execve");
-			free(pathname);
-			break ;
-		}
-		free(pathname);
-		++i;
-	}
+	my_path = find_path(envp, cmd2);
+	if(execve(pathname, cmd_av, envp) == -1)
+		perror("Execve");
+	free(pathname);
 	free_all_split(cmd_av, my_path);
 	close(fd2);
 	close(pipefd[1]);
