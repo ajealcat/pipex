@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:38:28 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/14 17:33:00 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/15 12:42:36 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,26 @@ int	main(int ac, char **av, char **envp)
 	int file2;
 
 	file1 = open(av[1], O_RDONLY);
-	file2 = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if(ac)
+	if (file1 == -1)
 	{
-		if (file1 == -1 || file2 == -1)
-		{
-			perror("Open");
-			return(0);
-		}
-		pipex(file1, file2, av, envp);
+		perror("Open");
+		return(0);
 	}
+	file2 = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0777);
+	if (file2 == -1)
+	{
+		close(file1);
+		perror("Open");
+		return(0);
+	}
+	if(ac == 4 || ac == 5)
+		pipex(file1, file2, av, envp);
+	close(file1);
+	close(file2);
 	return(0);
 }
 
-void	free_all_split(char **cmd, char **mypath)
+void	free_split(char **cmd)
 {
 	int i;
 
@@ -43,11 +49,4 @@ void	free_all_split(char **cmd, char **mypath)
 		++i;
 	}
 	free(cmd);
-	i = 0;
-	while (mypath[i])
-	{
-		free(mypath[i]);
-		++i;
-	}
-	free(mypath);
 }
