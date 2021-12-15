@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 16:42:05 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/15 14:35:38 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/15 16:48:50 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*find_path(char **envp, char **cmd_av)
 		my_path[i] = ft_strjoin(my_path[i], cmd_av[0]);
 		if (access(my_path[i], X_OK) == 0)
 		{
+			execve(my_path[i], cmd_av, envp);
 			free(find_path);
 			return(my_path[i]);
 		}
@@ -92,9 +93,6 @@ int	make_first_cmd(char *file1, char *cmd1, int *pipefd, char **envp)
 	dup2(pipefd[1], 1);
 	cmd_av = ft_split(cmd1, ' ');
 	pathname = find_path(envp, cmd_av);
-	close(pipefd[0]);
-	if (execve(pathname, cmd_av, envp) == -1)
-		perror("Execve");
 	free(pathname);
 	free_split(cmd_av);
 	return(0);
@@ -116,9 +114,6 @@ int	make_second_cmd(char *file2, char *cmd2, int *pipefd, char **envp)
 	dup2(pipefd[0], 0);
 	cmd_av = ft_split(cmd2, ' ');
 	pathname = find_path(envp, cmd_av);
-	close(pipefd[1]);
-	if (execve(pathname, cmd_av, envp) == -1)
-		perror("Execve");
 	free(pathname);
 	free_split(cmd_av);
 	return(0);

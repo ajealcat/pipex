@@ -6,13 +6,13 @@
 #    By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 14:57:32 by ajearuth          #+#    #+#              #
-#    Updated: 2021/12/14 10:03:41 by ajearuth         ###   ########.fr        #
+#    Updated: 2021/12/15 16:23:30 by ajearuth         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 BIN = pipex
 
-SRCS = main.c pipex.c 
+SRCS = main.c pipex.c
 SRCSD = srcs/
 bonus =
 
@@ -27,7 +27,7 @@ OBJSBONUS = $(bonus:.c=.o)
 
 CC = gcc -c -o
 LINKER = gcc -o
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror 
 
 $(BIN):	$(OBJS) $(LIBFT_OBJS)
 	$(LINKER) $@ $(OBJS) $(LIBFT_OBJS)
