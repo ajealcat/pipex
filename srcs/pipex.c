@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 16:42:05 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/15 16:48:50 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/15 17:42:16 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	pipex(char **av, char **envp)
 		perror("Fork");
 		return (0);
 	}
-	if (child_cmd1 >= 0)
+	if (child_cmd1 == 0)
 		make_first_cmd(av[1], av[2], pipefd, envp);
 	child_cmd2 = fork();
 	if (child_cmd2 < 0)
@@ -34,7 +34,7 @@ int	pipex(char **av, char **envp)
 		perror("Fork");
 		return (0);
 	}
-	if (child_cmd2 >= 0)
+	if (child_cmd2 == 0)
 		make_second_cmd(av[4], av[3], pipefd, envp);
 	close(pipefd[0]);
 	close (pipefd[1]);
@@ -79,7 +79,6 @@ char	*find_path(char **envp, char **cmd_av)
 
 int	make_first_cmd(char *file1, char *cmd1, int *pipefd, char **envp)
 {
-	char *pathname;
 	char **cmd_av;
 	int	fd1;
 
@@ -89,11 +88,11 @@ int	make_first_cmd(char *file1, char *cmd1, int *pipefd, char **envp)
 		perror("Open");
 		return(-1); 
 	}	
+	cmd_av = ft_split(cmd1, ' ');
 	dup2(fd1, 0);
 	dup2(pipefd[1], 1);
-	cmd_av = ft_split(cmd1, ' ');
-	pathname = find_path(envp, cmd_av);
-	free(pathname);
+	close(pipefd[0]);
+	find_path(envp, cmd_av);
 	free_split(cmd_av);
 	return(0);
 }
@@ -101,7 +100,6 @@ int	make_first_cmd(char *file1, char *cmd1, int *pipefd, char **envp)
 int	make_second_cmd(char *file2, char *cmd2, int *pipefd, char **envp)
 {
 	char **cmd_av;
-	char *pathname;
 	int	fd2;
 
 	fd2 = open(file2, O_CREAT | O_RDWR | O_TRUNC, 0777);
@@ -110,11 +108,11 @@ int	make_second_cmd(char *file2, char *cmd2, int *pipefd, char **envp)
 		perror("Open");
 		return(-1);
 	}
+	cmd_av = ft_split(cmd2, ' ');
 	dup2(fd2, 1);
 	dup2(pipefd[0], 0);
-	cmd_av = ft_split(cmd2, ' ');
-	pathname = find_path(envp, cmd_av);
-	free(pathname);
+	close(pipefd[1]);
+	find_path(envp, cmd_av);
 	free_split(cmd_av);
 	return(0);
 }
