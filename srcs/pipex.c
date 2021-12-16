@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 16:42:05 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/15 18:35:38 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:23:25 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ char	*find_path(char **envp, char **cmd_av)
 		if (access(my_path[i], X_OK) == 0)
 		{
 			execve(my_path[i], cmd_av, envp);
+			perror("Execve");
 			free(find_path);
-			return (my_path[i]);
+			return(my_path[i]);	
 		}
 		i++;
 	}
