@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 16:42:05 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/16 19:33:43 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/17 14:56:01 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,11 @@ int	pipex(char **av, char **envp)
 
 	pipe(pipefd);
 	child_cmd1 = fork();
-	if (child_cmd1 < 0)
-	{
-		perror("Fork");
-		return (1);
-	}
+	secure_child(child_cmd1);
 	if (child_cmd1 == 0)
 		make_first_cmd(av[1], av[2], pipefd, envp);
 	child_cmd2 = fork();
-	if (child_cmd2 < 0)
-	{
-		perror("Fork");
-		return (1);
-	}
+	secure_child(child_cmd2);
 	if (child_cmd2 == 0)
 		make_second_cmd(av[4], av[3], pipefd, envp);
 	close(pipefd[0]);
@@ -49,15 +41,7 @@ char	*find_path(char **envp, char **cmd_av)
 	char	**my_path;
 	int		i;
 
-	while (*envp)
-	{
-		if (ft_strncmp(*envp, "PATH=", 5) == 0)
-		{
-			find_path = ft_substr(*envp, 5, ft_strlen(*envp));
-			break ;
-		}
-		++envp;
-	}
+	find_path = parse_path(envp);
 	my_path = ft_split(find_path, ':');
 	i = 0;
 	while (my_path[i])
@@ -69,10 +53,11 @@ char	*find_path(char **envp, char **cmd_av)
 			if (execve(my_path[i], cmd_av, envp) == -1)
 				perror("Execve");
 			free(find_path);
-			return(my_path[i]);	
+			return (my_path[i]);
 		}
 		i++;
 	}
+	free_split(my_path);
 	free(find_path);
 	return (0);
 }
@@ -87,7 +72,6 @@ int	make_first_cmd(char *file1, char *cmd1, int *pipefd, char **envp)
 	{
 		perror("Open");
 		exit(1);
-
 	}	
 	cmd_av = ft_split(cmd1, ' ');
 	if (dup2(fd1, 0) == -1)

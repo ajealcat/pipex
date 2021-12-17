@@ -6,7 +6,7 @@
 /*   By: ajearuth <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:38:28 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/16 19:33:18 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/17 14:40:02 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	int stat;
+	int	stat;
 
 	stat = 0;
+
 	if (ac == 4 || ac == 5)
+	{
 		stat = pipex(av, envp);
-	if (WIFEXITED(stat))
-		return(WEXITSTATUS(stat));
+		if (WIFEXITED(stat))
+			return (WEXITSTATUS(stat));
+	}
 	return (127);
 }
 
@@ -38,3 +41,28 @@ void	free_split(char **cmd)
 	free(cmd);
 }
 
+int	secure_child(pid_t child_cmd)
+{
+	if (child_cmd < 0)
+	{
+		perror("Fork");
+		return (1);
+	}
+	return (0);
+}
+
+char	*parse_path(char **envp)
+{
+	char	*find_path;
+
+	while (*envp)
+	{
+		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+		{
+			find_path = ft_substr(*envp, 5, ft_strlen(*envp));
+			break ;
+		}
+		++envp;
+	}
+	return (find_path);
+}
