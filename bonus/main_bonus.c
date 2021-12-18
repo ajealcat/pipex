@@ -22,22 +22,13 @@ int	main(int ac, char **av, char **envp)
 	stat = 0;
 	if (ac >= 5)
 	{
-		if (ft_strncmp(av[1], "here_doc", 8) == 0)
+		i = 2;
+		file_out = open_file(av[ac - 1], 1);
+		file_in = open_file(av[1], 2);
+		if (dup2(file_in, 0) == -1)
 		{
-			i = 3;
-			file_out = open_file(av[ac - 1], 0);
-			here_doc(av[2], ac);
-		}
-		else
-		{
-			i = 2;
-			file_out = open_file(av[ac - 1], 1);
-			file_in = open_file(av[1], 2);
-			if (dup2(file_in, 0) == -1)
-			{
-				perror("Dup");
-				exit(1);
-			}
+			perror("Dup");
+			exit(1);
 		}
 		while (i < ac - 2)
 		{
