@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 13:48:42 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/18 13:48:42 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/20 14:03:14 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*find_path(char *cmd, char **envp)
 	while (my_path[i])
 	{
 		my_path[i] = ft_strjoin(my_path[i], "/");
-		my_path[i] = ft_strjoin(my_path[i], cmd_av[0]);
+		my_path[i] = ft_strjoin(my_path[i], cmd);
 		if (access(my_path[i], X_OK) == 0)
 		{
 			free(find_path);
@@ -35,6 +35,19 @@ char	*find_path(char *cmd, char **envp)
 	free_split(my_path);
 	free(find_path);
 	return (0);
+}
+
+void	free_split(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		free(cmd[i]);
+		++i;
+	}
+	free(cmd);
 }
 
 char	*parse_path(char **envp)

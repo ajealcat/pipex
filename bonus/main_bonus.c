@@ -6,11 +6,11 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 14:28:12 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/18 14:28:12 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/20 13:58:43 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 int	main(int ac, char **av, char **envp)
 {
@@ -41,23 +41,22 @@ int	main(int ac, char **av, char **envp)
 			perror("Dup");
 			exit(1);
 		}
-		if (exec(av[ac - 2], envp) == -1)
-				perror("Execve");
+		exec(av[ac - 2], envp);
 	}
 	return(127);
 }
 
-int	open_file(char *argv, int i)
+int	open_file(char *av, int i)
 {
 	int	file;
 
 	file = 0;
 	if (i == 0)
-		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0777);
+		file = open(av, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	else if (i == 1)
-		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		file = open(av, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	else if (i == 2)
-		file = open(argv, O_RDONLY, 0777);
+		file = open(av, O_RDONLY, 0777);
 	if (file == -1)
 	{
 		perror("Open");
