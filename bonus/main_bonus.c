@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 14:28:12 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/20 16:58:13 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/20 17:24:57 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int	open_file(char *av, int i)
 
 	file = 0;
 	if (i == 0)
-		file = open(av, O_WRONLY | O_CREAT | O_APPEND, 0777);
+		file = open(av, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (i == 1)
-		file = open(av, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		file = open(av, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (i == 2)
-		file = open(av, O_RDONLY, 0777);
+		file = open(av, O_RDONLY);
 	if (file == -1)
 	{
 		perror("Open");

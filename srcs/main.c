@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:38:28 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/20 16:31:00 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/20 17:46:26 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ int	main(int ac, char **av, char **envp)
 	int	stat;
 
 	stat = 0;
-
-	if (ac == 4)
+	if (ac == 5)
 	{
 		stat = pipex(av, envp);
 		if (WIFEXITED(stat))
 			return (WEXITSTATUS(stat));
 	}
+	if (ac > 5 || ac < 5)
+		ft_putstr_fd("Try this way : ./pipex file1 <cmd1> <cmd2> file2\n", 1);
 	return (127);
 }
 
@@ -42,7 +43,7 @@ void	free_split(char **cmd)
 
 int	secure_child(pid_t child_cmd)
 {
-	if (child_cmd == -1)
+	if (child_cmd < 0)
 	{
 		perror("Fork");
 		return (1);

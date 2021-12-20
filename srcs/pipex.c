@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 16:42:05 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/20 16:24:54 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/20 17:34:58 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	pipex(char **av, char **envp)
 	secure_child(child_cmd1);
 	if (child_cmd1 == 0)
 		make_first_cmd(av[1], av[2], pipefd, envp);
-//	printf("%s\n"," -OK");
 	child_cmd2 = fork();
 	secure_child(child_cmd2);
 	if (child_cmd2 == 0)
@@ -96,8 +95,7 @@ int	make_second_cmd(char *file2, char *cmd2, int *pipefd, char **envp)
 	int		fd2;
 	char	**cmd_av;
 
-//	printf("OK\n");
-	fd2 = open(file2, O_CREAT | O_RDWR | O_TRUNC, 0777);
+	fd2 = open(file2, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd2 == -1)
 	{
 		perror("Open");
