@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 14:28:12 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/20 13:58:43 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/20 16:58:13 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,11 @@
 int	main(int ac, char **av, char **envp)
 {
 	int	i;
-	int stat;
 	int	file_in;
 	int	file_out;
 
-	stat = 0;
 	if (ac >= 5)
 	{
-		i = 2;
 		file_out = open_file(av[ac - 1], 1);
 		file_in = open_file(av[1], 2);
 		if (dup2(file_in, 0) == -1)
@@ -30,12 +27,9 @@ int	main(int ac, char **av, char **envp)
 			perror("Dup");
 			exit(1);
 		}
-		while (i < ac - 2)
-		{
-			stat = make_child(av[i++], envp);
-			if (WIFEXITED(stat))
-				return (WEXITSTATUS(stat));
-		}
+		i = 2;
+		while (i < (ac - 2))
+			make_child(av[i++], envp);
 		if (dup2(file_out, 1) == -1)
 		{
 			perror("Dup");
@@ -43,7 +37,7 @@ int	main(int ac, char **av, char **envp)
 		}
 		exec(av[ac - 2], envp);
 	}
-	return(127);
+	return (127);
 }
 
 int	open_file(char *av, int i)

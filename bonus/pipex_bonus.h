@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 15:32:49 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/20 14:01:30 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/20 17:01:15 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int		open_file(char *av, int i);
 void	exec(char *av, char **envp);
 void	here_doc(char *limiter, int ac);
 void	free_split(char **cmd);
+void	error(void);
 
 #endif

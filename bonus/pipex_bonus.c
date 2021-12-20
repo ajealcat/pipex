@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 15:31:21 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/20 13:59:25 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/20 17:02:05 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@ int	make_child(char *av, char **envp)
 	{
 		close(pipefd[0]);
 		if (dup2(pipefd[1], 1) == -1)
-		{
-			perror("Dup");
-			exit(1);
-		}
+			error();
 		exec(av, envp);
 	}
 	else
 	{
+		waitpid(child_cmd, &status, 0);
 		close(pipefd[1]);
 		if (dup2(pipefd[0], 0) == -1)
-		{
-			perror("Dup");
-			exit(1);
-		}
-		waitpid(child_cmd, &status, 0);
+			error();
 	}
 	return (status);
+}
+
+void	error(void)
+{
+	perror("Dup");
+	exit(1);
 }
 
 void	exec(char *av, char **envp)

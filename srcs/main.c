@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:38:28 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/18 16:15:17 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/20 16:31:00 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char **av, char **envp)
 
 	stat = 0;
 
-	if (ac == 4 || ac == 5)
+	if (ac == 4)
 	{
 		stat = pipex(av, envp);
 		if (WIFEXITED(stat))
@@ -42,7 +42,7 @@ void	free_split(char **cmd)
 
 int	secure_child(pid_t child_cmd)
 {
-	if (child_cmd < 0)
+	if (child_cmd == -1)
 	{
 		perror("Fork");
 		return (1);
