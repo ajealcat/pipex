@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 15:32:49 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/20 17:01:15 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:13:15 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ char	*parse_path(char **envp);
 int		secure_child(pid_t child_cmd);
 int		make_child(char *av, char **envp);
 int		open_file(char *av, int i);
+int		make_last_child(char **av, int ac, char **envp);
 void	exec(char *av, char **envp);
 void	here_doc(char *limiter, int ac);
 void	free_split(char **cmd);
 void	error(void);
+void	error_pipe(void);
 
 #endif

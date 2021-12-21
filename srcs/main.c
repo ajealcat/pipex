@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:38:28 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/20 17:46:26 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:14:15 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ void	free_split(char **cmd)
 		++i;
 	}
 	free(cmd);
+}
+
+void	error_pipe(void)
+{
+	perror("Pipe");
+	exit(1);
 }
 
 int	secure_child(pid_t child_cmd)

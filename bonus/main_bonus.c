@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 14:28:12 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/20 17:24:57 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/21 11:54:14 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int ac, char **av, char **envp)
 			perror("Dup");
 			exit(1);
 		}
-		exec(av[ac - 2], envp);
+		make_last_child(av, ac, envp);
 	}
 	return (127);
 }

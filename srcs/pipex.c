@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 16:42:05 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/20 17:34:58 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:14:53 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	pipex(char **av, char **envp)
 	pid_t	child_cmd1;
 	pid_t	child_cmd2;
 
-	pipe(pipefd);
+	if (pipe(pipefd) == -1)
+		error_pipe();
 	child_cmd1 = fork();
 	secure_child(child_cmd1);
 	if (child_cmd1 == 0)

@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 16:41:51 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/18 16:15:22 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:16:28 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int		secure_child(pid_t child_cmd);
 char	*find_path(char **envp, char **cmd_av);
 char	*parse_path(char **envp);
 void	free_split(char **cmd);
+void	error_pipe(void);
 
 #endif

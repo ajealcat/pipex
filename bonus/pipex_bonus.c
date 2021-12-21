@@ -6,7 +6,7 @@
 /*   By: ajearuth <ajearuth@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 15:31:21 by ajearuth          #+#    #+#             */
-/*   Updated: 2021/12/20 17:02:05 by ajearuth         ###   ########.fr       */
+/*   Updated: 2021/12/21 12:15:39 by ajearuth         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	make_child(char *av, char **envp)
 	int		pipefd[2];
 	int		status;
 
-	pipe(pipefd);
+	if (pipe(pipefd) == -1)
+		error_pipe();
 	child_cmd = fork();
 	secure_child(child_cmd);
 	if (child_cmd == 0)
@@ -34,6 +35,29 @@ int	make_child(char *av, char **envp)
 		close(pipefd[1]);
 		if (dup2(pipefd[0], 0) == -1)
 			error();
+	}
+	return (status);
+}
+
+int	make_last_child(char **av, int ac, char **envp)
+{
+	pid_t	last_child;
+	int		pipefd[2];
+	int		status;
+
+	if (pipe(pipefd) == -1)
+		error_pipe();
+	last_child = fork();
+	secure_child(last_child);
+	if (last_child == 0)
+	{
+		close(pipefd[0]);
+		exec(av[ac - 2], envp);
+	}
+	else
+	{
+		waitpid(last_child, &status, 0);
+		close(pipefd[1]);
 	}
 	return (status);
 }
